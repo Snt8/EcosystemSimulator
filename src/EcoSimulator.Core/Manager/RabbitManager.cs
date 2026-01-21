@@ -1,7 +1,8 @@
 namespace EcoSimulator.Core.Manager;
 
-using System.Security.Cryptography.X509Certificates;
 using EcoSimulator.Core.Interface.IWorld;
+using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organism;
 
 
 public class RabbitManager : IPopulationManager
@@ -12,11 +13,11 @@ public class RabbitManager : IPopulationManager
     private int _turnTotalRabbits;
     public IEnumerable<Organism> PopulationRegister(IEnumerable<Organism> allOrganism)
     {
-        _turnDeads = allOrganism.OfType<Rabbit>.Where(r => r.estaVivo == false).count();
+        _turnDeads = allOrganism.OfType<Rabbit>.Where(r => r.IsDead == false).count();
         //Creating the live rabbits list
-        var rabbits = allOrganism.OfType<Rabbit>().Where(r => r.estaVivo == true).ToList();
+        var rabbits = allOrganism.OfType<Rabbit>().Where(r => r.IsDead == true).ToList();
         //Pick the rabbits have eaten in this turn
-        var rabbitsEaten = rabbits.Where(r => r.haComido == true).Count();
+        var rabbitsEaten = rabbits.Where(r => r.IsEaten == true).Count();
 
         List<Rabbit> totalTurnRabbits = new();
         
