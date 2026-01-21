@@ -15,8 +15,11 @@ public abstract class FaunaOrganism : Organism
         Hunger = 0.0;
     }
 
-    public virtual void ResetHunger(double energyGiven)
+    protected void ApplyMetabolism(double energySpent, double hungryGain)
     {
-        Hunger = Math.Max(0, Hunger - energyGiven);
+        //Method implements the general rule in the calculation of the Metabolism
+        Energy = Math.Max(0, Energy - energySpent);
+        Hunger += hungryGain;
     }
+
 }
