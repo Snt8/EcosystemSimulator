@@ -6,12 +6,12 @@ using EcoSimulator.Core.Interface.IOrganism;
 
 public abstract class FaunaOrganism : Organism
 {
-    public bool IsEaten {get; protected set;}
+    public bool HasEaten {get; protected set;}
     public double Hunger {get; protected set;}
 
     public FaunaOrganism(double objEnergy) : base(objEnergy)
     {
-        IsEaten = false;
+        HasEaten = false;
         Hunger = 0.0;
     }
 

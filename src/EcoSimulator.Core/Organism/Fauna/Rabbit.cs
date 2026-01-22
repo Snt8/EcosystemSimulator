@@ -41,6 +41,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
         //The rabbit eat his food and give Energy and minus Hungry
         Energy += food.EnergyGiven;
         Hunger -= food.HungryMinus;
+        HasEaten = true;
     } 
 
     public void Die()
