@@ -1,5 +1,6 @@
 namespace EcoSimulator.Core.Organism;
 
+using System;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.IOrganism;
 using EcoSimulator.Core.Organism.Base;
@@ -13,7 +14,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
     private const int AdultAge = 6;
     private const int MaxOlderAge = 12;
     private const double MaxRabbitEnergy = 65.0;
-    private const double MinimunRabbitEnergy = 3.5;
+    private const double MinimumRabbitEnergy = 3.5;
 
     public Rabbit() : base(MaxRabbitEnergy)
     {
@@ -22,6 +23,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
 
     public void Grow()
     {
+        if (IsDead) return;
         //Grow process: The rabbit increment 1 year per call, check him Energy Spent and Check if Die.
         Age ++;
         CheckMetabolism();
@@ -39,19 +41,18 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
     {
         if(IsDead) return;
         //The rabbit eat his food and give Energy and minus Hungry
-        Energy += food.EnergyGiven;
-        Hunger -= food.HungryMinus;
+        Energy = Math.Min(Energy + food.EnergyGiven, MaxRabbitEnergy);
+        Hunger = Math.Max(Hunger - food.HungryMinus, 0);
         HasEaten = true;
     } 
 
     public void Die()
     {
         //The rabbit die if is older than 12 or his energy is minus than 5.0
-        if((Energy < MinimunRabbitEnergy) || (Age > MaxOlderAge))
+        if((Energy < MinimumRabbitEnergy) || (Age > MaxOlderAge))
         {
             IsDead = true;
         }
     }
 
-    
 }
