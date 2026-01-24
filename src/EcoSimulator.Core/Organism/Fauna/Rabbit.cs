@@ -24,10 +24,9 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
     public void Grow()
     {
         if (IsDead) return;
-        //Grow process: The rabbit increment 1 year per call, check him Energy Spent and Check if Die.
+        //Grow process: The rabbit increment 1 year per call, check Energy Spent.
         Age ++;
         CheckMetabolism();
-        Die();
     }
 
     public void CheckMetabolism()
