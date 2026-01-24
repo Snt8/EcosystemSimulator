@@ -1,8 +1,11 @@
 namespace EcoSimulator.Core.Manager;
 
+using System.Collections.Generic;
+using System.Linq;
 using EcoSimulator.Core.Interface.IWorld;
 using EcoSimulator.Core.Organism.Base;
 using EcoSimulator.Core.Organism;
+using EcoSimulator.Core.Organism.SpeciesReport;
 
 
 public class RabbitManager : IPopulationManager
@@ -13,11 +16,14 @@ public class RabbitManager : IPopulationManager
     private int _turnTotalRabbits;
     public IEnumerable<Organism> PopulationRegister(IEnumerable<Organism> allOrganism)
     {
-        _turnDeads = allOrganism.OfType<Rabbit>.Where(r => r.IsDead == false).count();
-        //Creating the live rabbits list
-        var rabbits = allOrganism.OfType<Rabbit>().Where(r => r.IsDead == true).ToList();
-        //Pick the rabbits have eaten in this turn
-        var rabbitsEaten = rabbits.Where(r => r.IsEaten == true).Count();
+        //Count the deads happens in the turn
+        _turnDeads = allOrganism.OfType<Rabbit>().Where(r => r.IsDead).Count();
+        
+        //Select the alive rabbits
+        var rabbits = allOrganism.OfType<Rabbit>().Where(r => !r.IsDead).ToList();
+        
+        //Select the rabbits has eaten
+        var rabbitsEaten = rabbits.Where(r => r.HasEaten).Count();
 
         List<Rabbit> totalTurnRabbits = new();
         
@@ -28,11 +34,8 @@ public class RabbitManager : IPopulationManager
             _turnTotalRabbits = rabbits.Count();
             return totalTurnRabbits;
         }
-        //Apply the rule for the reproduction, if we have an odd number of rabbits but they're most than 2, we'll just reproduce the even max pairs
-        if(rabbitsEaten % 2 != 0) reproduceNumber = (reproduceNumber / 2) - 1;
-
-        //The case if the number of rabbits is even
-        else reproduceNumber /= 2;
+        //Integer division automatically handles the odd numbers (floors the result)
+        reproduceNumber /= 2;
 
         _turnBorns = reproduceNumber;
 
@@ -48,4 +51,9 @@ public class RabbitManager : IPopulationManager
         return totalTurnRabbits;
     }
 
+    public SpeciesReport GetTurnReport()
+    {
+        //Build the SpeciesReport instance to be used in the Simulation Report 
+        return new SpeciesReport(nameof(Rabbit), _turnBorns, _turnTotalRabbits, _turnDeads);
+    }
 }

@@ -1,6 +1,9 @@
 namespace EcoSimulator.Core.Processors;
 
+using System.Dynamic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
@@ -9,24 +12,33 @@ using EcoSimulator.Core.Organism.Base;
 
 public class RabbitProcessor : ILifeFaunaProcessor
 {
+    public List<Organism> MasterRabbit {get; private set;}
+    public List<FloraOrganism> MasterFood {get; private set;}
+    private Queue<FloraOrganism> UneatenFood {get; set;}
+    public RabbitProcessor(List<Organism> objMasterRabbits, List<FloraOrganism> objMasterFood)
+    {
+        MasterRabbit = objMasterRabbits;
+        MasterFood = objMasterFood;
+        UneatenFood = new Queue<FloraOrganism>(MasterFood.Where(f => !f.IsEaten));
+    }
+    
     //Local Processor calls the rabbits methods
-    public void CallGrow(IEnumerable<IGrow> rabbits)
+    public void CallGrow()
     {
         //Calling the Grow method
-        foreach(var rabbit in rabbits)
+        foreach(var rabbit in MasterRabbit.OfType<IGrow>())
         {
             rabbit.Grow();
         }
     }
 
-    public IEnumerable<FloraOrganism> CallEat(IEnumerable<IEat> rabbits, IEnumerable<FloraOrganism> food)
+    public IEnumerable<FloraOrganism> CallEat()
     {
         List<FloraOrganism> eatenFood = new();
-        foreach(var rabbit in rabbits)
+        foreach(var rabbit in MasterRabbit.OfType<IEat>())
         {
-            var targetFood = food.FirstOrDefault(f => !f.IsEaten);
-            //Checking about if the targetFood could be null
-            if(targetFood is not null)
+            //Using the internal Queue for O(1) access
+            if(UneatenFood.TryDequeue(out var targetFood))
             {
                 //Calling the Eat() method and adding the target in the List that return the food have eaten
                 rabbit.Eat(targetFood);
@@ -39,14 +51,15 @@ public class RabbitProcessor : ILifeFaunaProcessor
         return eatenFood;
     }
 
-    public IEnumerable<FaunaOrganism> CallDie(IEnumerable<IDie> organism)
+    public IEnumerable<Organism> CallDie()
     {
-        List<FaunaOrganism> diedRabbits = new();
-        foreach(var rabbit in organism)
+        List<Organism> diedRabbits = new();
+        foreach(var rabbit in MasterRabbit.OfType<IDie>())
         {
             rabbit.Die();
 
-            if(rabbit is FaunaOrganism fauna && fauna.IsDead)
+            //Checking if our rabbit die
+            if(rabbit is Organism fauna && fauna.IsDead)
             {
                 diedRabbits.Add(fauna);
             }
