@@ -1,5 +1,6 @@
 namespace EcoSimulator.Core.Interface.IWorld;
 using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organism.SpeciesReport;
 
 public interface IPopulationManager
 {
