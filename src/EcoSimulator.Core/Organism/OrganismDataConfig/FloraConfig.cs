@@ -2,6 +2,7 @@ namespace EcoSimulator.Core.Organism.OrganismDataConfig;
 
 public class FloraConfig
 {
+    //Standart Initial Configuration for every FloraOrganism
     public double Energy {get; set;}
     public double EnergyGiven{get; set;}
     public double HungryMinus{get; set;}
