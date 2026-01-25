@@ -6,6 +6,7 @@ public abstract class Organism
     public double Energy {get; protected set;}
     public int Age {get; protected set;}
     public bool IsDead {get; protected set;}
+    public bool IsEaten {get; set;}
 
     public Organism(double objEnergy)
     {
@@ -13,5 +14,6 @@ public abstract class Organism
         Energy = objEnergy;
         Age = 0;
         IsDead = false;
+        IsEaten = false;
     }
 }

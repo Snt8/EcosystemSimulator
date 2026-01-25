@@ -8,7 +8,7 @@ public interface ILifeFaunaProcessor
     public void CallGrow();
 
     // Second time of the Turn, the Processor calls the Eat() method of the FaunaOrganism Sub-Class
-    public IEnumerable<FloraOrganism> CallEat();
+    public IEnumerable<Organism> CallEat();
 
     //Third time of the Turn, the Processor calls the Die() method of the FaunaOrganism Sub-Class if die
     public IEnumerable<Organism> CallDie();

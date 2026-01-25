@@ -36,13 +36,17 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
         ApplyMetabolism(energyCost, energyCost);
     }
 
-    public void Eat(FloraOrganism food)
+    public void Eat(Organism food)
     {
         if(IsDead) return;
-        //The rabbit eat his food and give Energy and minus Hungry
-        Energy = Math.Min(Energy + food.EnergyGiven, MaxRabbitEnergy);
-        Hunger = Math.Max(Hunger - food.HungryMinus, 0);
-        HasEaten = true;
+        
+        if (food is FloraOrganism flora)
+        {
+            //The rabbit eat his food and give Energy and minus Hungry
+            Energy = Math.Min(Energy + flora.EnergyGiven, MaxRabbitEnergy);
+            Hunger = Math.Max(Hunger - flora.HungryMinus, 0);
+            HasEaten = true;
+        }
     } 
 
     public void Die()
