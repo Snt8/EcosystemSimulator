@@ -13,13 +13,13 @@ using EcoSimulator.Core.Organism.Base;
 public class RabbitProcessor : ILifeFaunaProcessor
 {
     public List<Organism> MasterRabbit {get; private set;}
-    public List<FloraOrganism> MasterFood {get; private set;}
-    private Queue<FloraOrganism> UneatenFood {get; set;}
-    public RabbitProcessor(List<Organism> objMasterRabbits, List<FloraOrganism> objMasterFood)
+    public List<Organism> MasterFood {get; private set;}
+    private Queue<Organism> UneatenFood {get; set;}
+    public RabbitProcessor(List<Organism> objMasterRabbits, List<Organism> objMasterFood)
     {
         MasterRabbit = objMasterRabbits;
         MasterFood = objMasterFood;
-        UneatenFood = new Queue<FloraOrganism>(MasterFood.Where(f => !f.IsEaten));
+        UneatenFood = new Queue<Organism>(MasterFood.Where(f => !f.IsEaten && f is FloraOrganism));
     }
     
     //Local Processor calls the rabbits methods
@@ -32,9 +32,9 @@ public class RabbitProcessor : ILifeFaunaProcessor
         }
     }
 
-    public IEnumerable<FloraOrganism> CallEat()
+    public IEnumerable<Organism> CallEat()
     {
-        List<FloraOrganism> eatenFood = new();
+        List<Organism> eatenFood = new();
         foreach(var rabbit in MasterRabbit.OfType<IEat>())
         {
             //Using the internal Queue for O(1) access
