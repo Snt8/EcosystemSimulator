@@ -3,5 +3,6 @@ using EcoSimulator.Core.Organism.Base;
 
 public interface ILifeFloraProcessor
 {
+    public void CallGrow();
     public IEnumerable<Organism> CallDie();
 }
