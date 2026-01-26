@@ -7,7 +7,7 @@ using EcoSimulator.Core.Organism.Base;
 
 
 
-public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
+public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
 {
     private const double EnergySpentYounger = 10.0;
     private const double EnergySpentOlder = 5.0;
@@ -15,6 +15,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
     private const int MaxOlderAge = 12;
     private const double MaxRabbitEnergy = 65.0;
     private const double MinimumRabbitEnergy = 3.5;
+    private const double RabbitReproduceEnergy = 35.0;
 
     public Rabbit() : base(MaxRabbitEnergy)
     {
@@ -47,7 +48,12 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IDie
             Hunger = Math.Max(Hunger - flora.HungryMinus, 0);
             HasEaten = true;
         }
-    } 
+    }
+
+    public void Reproduce()
+    {
+        HasEaten = false;
+    }
 
     public void Die()
     {

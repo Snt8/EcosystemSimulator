@@ -67,4 +67,23 @@ public class RabbitProcessor : ILifeFaunaProcessor
 
         return diedRabbits;
     }
+
+    public IEnumerable<Organism> CallReproduce()
+    {
+        //Check the rabbits are avaible for reproduce
+        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.RabbitReproduceEnergy);
+        List<Organism> newRabbits = [];
+        
+        //Iterate for check the number of new rabbits
+        for(int reproductionTimes = 0; reproductionTimes < aviableReproductionRabbits.Count() / 2; reproductionTimes++)
+        {
+            Rabbit babyRabbit = new Rabbit();
+            newRabbits.Add(babyRabbit);
+            
+
+        }
+
+        return newRabbits;
+
+    }
 }
