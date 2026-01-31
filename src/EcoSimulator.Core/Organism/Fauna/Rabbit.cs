@@ -17,7 +17,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
     private const double MinimumRabbitEnergy = 3.5;
     private const double RabbitReproduceEnergy = 35.0;
 
-    public Rabbit() : base(MaxRabbitEnergy)
+    public Rabbit() : base(MaxRabbitEnergy, RabbitReproduceEnergy)
     {
         
     }

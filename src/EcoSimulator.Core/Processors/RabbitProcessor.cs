@@ -71,7 +71,7 @@ public class RabbitProcessor : ILifeFaunaProcessor
     public IEnumerable<Organism> CallReproduce()
     {
         //Check the rabbits are avaible for reproduce
-        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.RabbitReproduceEnergy);
+        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy);
         List<Organism> newRabbits = [];
         
         //Iterate for check the number of new rabbits
