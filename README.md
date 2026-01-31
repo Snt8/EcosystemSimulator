@@ -1,3 +1,3 @@
 # Ecosystem Simulator
 
-**Enviroment Simulator** is a simulation life motor
+**Ecosystem Simulator** is a simulation life motor
