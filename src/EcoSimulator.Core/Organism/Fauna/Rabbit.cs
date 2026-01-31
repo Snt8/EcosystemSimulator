@@ -41,12 +41,13 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
     {
         if(IsDead) return;
         
-        if (food is FloraOrganism flora)
+        if (food is FloraOrganism flora && !flora.IsEaten && !flora.IsDead)
         {
             //The rabbit eat his food and give Energy and minus Hungry
             Energy = Math.Min(Energy + flora.EnergyGiven, MaxRabbitEnergy);
             Hunger = Math.Max(Hunger - flora.HungryMinus, 0);
             HasEaten = true;
+            flora.IsEaten = true;
         }
     }
 
