@@ -1,8 +1,6 @@
 namespace EcoSimulator.Core.Organism.Base;
 
 using System;
-using System.Runtime.CompilerServices;
-using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.IOrganism;
 
 public abstract class FaunaOrganism : Organism
