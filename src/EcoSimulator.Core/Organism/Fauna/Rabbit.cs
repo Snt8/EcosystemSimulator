@@ -10,31 +10,14 @@ using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
 {
-    private readonly FaunaConfig _config;
-
-    public Rabbit(FaunaConfig config) : base(config.MaxEnergy, config.FaunaReproduceEnergy)
+    public Rabbit(FaunaConfig config) : base(config, config.MaxEnergy, config.FaunaReproduceEnergy)
     {
-        _config = config;
     }
 
-    public void Grow()
+    public override void Eat(Organism food)
     {
-        if (IsDead) return;
-        //Grow process: The rabbit increment 1 year per call, check Energy Spent.
-        Age ++;
-        CheckMetabolism();
-    }
-
-    public void CheckMetabolism()
-    {
-        //Calculated the Energy Spent and the Hunger of the rabbit
-        double energyCost = (Age < _config.AdultAge) ? _config.EnergySpentYounger : _config.EnergySpentOlder;
-        ApplyMetabolism(energyCost, energyCost);
-    }
-
-    public void Eat(Organism food)
-    {
-        if(IsDead) return;
+        // Call base to check common rules (like IsDead)
+        base.Eat(food);
         
         if (food is FloraOrganism flora && !flora.IsEaten && !flora.IsDead)
         {
