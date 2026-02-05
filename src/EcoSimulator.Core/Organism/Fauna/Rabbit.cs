@@ -4,22 +4,17 @@ using System;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.IOrganism;
 using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 
 
 public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
 {
-    private const double EnergySpentYounger = 10.0;
-    private const double EnergySpentOlder = 5.0;
-    private const int AdultAge = 6;
-    private const int MaxOlderAge = 12;
-    private const double MaxRabbitEnergy = 65.0;
-    private const double MinimumRabbitEnergy = 3.5;
-    private const double RabbitReproduceEnergy = 35.0;
+    private readonly FaunaConfig _config;
 
-    public Rabbit() : base(MaxRabbitEnergy, RabbitReproduceEnergy)
+    public Rabbit(FaunaConfig config) : base(config.MaxEnergy, config.FaunaReproduceEnergy)
     {
-        
+        _config = config;
     }
 
     public void Grow()
@@ -33,7 +28,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
     public void CheckMetabolism()
     {
         //Calculated the Energy Spent and the Hunger of the rabbit
-        double energyCost = (Age < AdultAge) ? EnergySpentYounger : EnergySpentOlder;
+        double energyCost = (Age < _config.AdultAge) ? _config.EnergySpentYounger : _config.EnergySpentOlder;
         ApplyMetabolism(energyCost, energyCost);
     }
 
@@ -44,7 +39,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
         if (food is FloraOrganism flora && !flora.IsEaten && !flora.IsDead)
         {
             //The rabbit eat his food and give Energy and minus Hungry
-            Energy = Math.Min(Energy + flora.EnergyGiven, MaxRabbitEnergy);
+            Energy = Math.Min(Energy + flora.EnergyGiven, _config.MaxEnergy);
             Hunger = Math.Max(Hunger - flora.HungryMinus, 0);
             HasEaten = true;
             flora.IsEaten = true;
@@ -59,7 +54,7 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
     public void Die()
     {
         //The rabbit die if is older than 12 or his energy is minus than 5.0
-        if((Energy < MinimumRabbitEnergy) || (Age > MaxOlderAge))
+        if((Energy < _config.MinimumEnergy) || (Age > _config.MaxOlderAge))
         {
             IsDead = true;
         }
