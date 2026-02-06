@@ -74,8 +74,9 @@ public class RabbitProcessor : ILifeFaunaProcessor
         var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy);
         List<Organism> newRabbits = [];
         
+        int reproductionCount = aviableReproductionRabbits.Count() / 2;
         //Iterate for check the number of new rabbits
-        for(int reproductionTimes = 0; reproductionTimes < aviableReproductionRabbits.Count() / 2; reproductionTimes++)
+        for(int reproductionTimes = 0; reproductionTimes < reproductionCount; reproductionTimes++)
         {
             Rabbit babyRabbit = new Rabbit();
             newRabbits.Add(babyRabbit);
