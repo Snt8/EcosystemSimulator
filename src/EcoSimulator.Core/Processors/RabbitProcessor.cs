@@ -77,20 +77,13 @@ public class RabbitProcessor : ILifeFaunaProcessor
     public IEnumerable<Organism> CallReproduce()
     {
         //Check the rabbits are avaible for reproduce
-        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy);
-        int reproductionCount = aviableReproductionRabbits.Count() / 2;
-        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>()
-                                                     .Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy)
-                                                     .ToList();
+        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy).ToList();
 
         int reproductionCount = aviableReproductionRabbits.Count / 2;
         List<Organism> newRabbits = new(reproductionCount);
         //Iterate for check the number of new rabbits
         for(int reproductionTimes = 0; reproductionTimes < reproductionCount; reproductionTimes++)
         {
-            Rabbit babyRabbit = new Rabbit(_rabbitConfig);
-            newRabbits.Add(babyRabbit);
-            
             // Update parents state (reset HasEaten) so they need to eat again before reproducing
             aviableReproductionRabbits[reproductionTimes * 2].Reproduce();
             aviableReproductionRabbits[(reproductionTimes * 2) + 1].Reproduce();
