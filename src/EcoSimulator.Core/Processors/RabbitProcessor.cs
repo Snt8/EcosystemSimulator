@@ -9,16 +9,20 @@ using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
 using EcoSimulator.Core.Organism;
 using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 public class RabbitProcessor : ILifeFaunaProcessor
 {
     public List<Organism> MasterRabbit {get; private set;}
     public List<Organism> MasterFood {get; private set;}
     private Queue<Organism> UneatenFood {get; set;}
-    public RabbitProcessor(List<Organism> objMasterRabbits, List<Organism> objMasterFood)
+    private readonly FaunaConfig _rabbitConfig;
+
+    public RabbitProcessor(List<Organism> objMasterRabbits, List<Organism> objMasterFood, FaunaConfig rabbitConfig)
     {
         MasterRabbit = objMasterRabbits;
         MasterFood = objMasterFood;
+        _rabbitConfig = rabbitConfig;
         UneatenFood = new Queue<Organism>(MasterFood.Where(f => !f.IsEaten && f is FloraOrganism));
     }
     
@@ -77,7 +81,7 @@ public class RabbitProcessor : ILifeFaunaProcessor
         //Iterate for check the number of new rabbits
         for(int reproductionTimes = 0; reproductionTimes < reproductionCount; reproductionTimes++)
         {
-            Rabbit babyRabbit = new Rabbit();
+            Rabbit babyRabbit = new Rabbit(_rabbitConfig);
             newRabbits.Add(babyRabbit);
             
 
