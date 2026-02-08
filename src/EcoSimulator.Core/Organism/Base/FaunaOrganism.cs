@@ -41,6 +41,14 @@ public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, I
         if (IsDead) return;
     }
 
+    // Protected method: Only children (Rabbit, Wolf) can access their metabolism directly.
+    protected void IngestFood(double energyValue, double hungerReduction)
+    {
+        Energy = Math.Min(Energy + energyValue, _config.MaxEnergy);
+        Hunger = Math.Max(Hunger - hungerReduction, 0);
+        HasEaten = true;
+    }
+
     public void ApplyMetabolism(double energySpent, double hungryGain)
     {
         //Method implements the general rule in the calculation of the Metabolism
