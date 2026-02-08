@@ -8,7 +8,7 @@ using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 
 
-public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
+public class Rabbit : FaunaOrganism
 {
     public Rabbit(FaunaConfig config) : base(config, config.MaxEnergy, config.FaunaReproduceEnergy)
     {
@@ -18,29 +18,13 @@ public class Rabbit : FaunaOrganism, IGrow, ICheckMetabolism, IEat, IReproduce, 
     {
         // Call base to check common rules (like IsDead)
         base.Eat(food);
+        if (IsDead) return;
         
         if (food is FloraOrganism flora && !flora.IsEaten && !flora.IsDead)
         {
-            //The rabbit eat his food and give Energy and minus Hungry
-            Energy = Math.Min(Energy + flora.EnergyGiven, _config.MaxEnergy);
-            Hunger = Math.Max(Hunger - flora.HungryMinus, 0);
-            HasEaten = true;
+            // Policy: Check type. Mechanics: Delegate to base.
+            IngestFood(flora.EnergyGiven, flora.HungryMinus);
             flora.IsEaten = true;
         }
     }
-
-    public void Reproduce()
-    {
-        HasEaten = false;
-    }
-
-    public void Die()
-    {
-        //The rabbit die if is older than 12 or his energy is minus than 5.0
-        if((Energy < _config.MinimumEnergy) || (Age > _config.MaxOlderAge))
-        {
-            IsDead = true;
-        }
-    }
-
 }

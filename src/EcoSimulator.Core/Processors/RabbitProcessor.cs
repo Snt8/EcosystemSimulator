@@ -1,24 +1,25 @@
 namespace EcoSimulator.Core.Processors;
 
-using System.Dynamic;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
 using EcoSimulator.Core.Organism;
 using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 public class RabbitProcessor : ILifeFaunaProcessor
 {
     public List<Organism> MasterRabbit {get; private set;}
     public List<Organism> MasterFood {get; private set;}
     private Queue<Organism> UneatenFood {get; set;}
-    public RabbitProcessor(List<Organism> objMasterRabbits, List<Organism> objMasterFood)
+    private readonly FaunaConfig _rabbitConfig;
+
+    public RabbitProcessor(List<Organism> objMasterRabbits, List<Organism> objMasterFood, FaunaConfig rabbitConfig)
     {
         MasterRabbit = objMasterRabbits;
         MasterFood = objMasterFood;
+        _rabbitConfig = rabbitConfig;
         UneatenFood = new Queue<Organism>(MasterFood.Where(f => !f.IsEaten && f is FloraOrganism));
     }
     
@@ -42,8 +43,10 @@ public class RabbitProcessor : ILifeFaunaProcessor
             {
                 //Calling the Eat() method and adding the target in the List that return the food have eaten
                 rabbit.Eat(targetFood);
-                targetFood.IsEaten = true;
-                eatenFood.Add(targetFood);
+                if (targetFood.IsEaten)
+                {
+                    eatenFood.Add(targetFood);
+                }
             }
 
         }
@@ -71,16 +74,18 @@ public class RabbitProcessor : ILifeFaunaProcessor
     public IEnumerable<Organism> CallReproduce()
     {
         //Check the rabbits are avaible for reproduce
-        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy);
-        int reproductionCount = aviableReproductionRabbits.Count() / 2;
+        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy).ToList();
+
+        int reproductionCount = aviableReproductionRabbits.Count / 2;
         List<Organism> newRabbits = new(reproductionCount);
         //Iterate for check the number of new rabbits
         for(int reproductionTimes = 0; reproductionTimes < reproductionCount; reproductionTimes++)
         {
-            Rabbit babyRabbit = new Rabbit();
-            newRabbits.Add(babyRabbit);
-            
+            // Update parents state (reset HasEaten) so they need to eat again before reproducing
+            aviableReproductionRabbits[reproductionTimes * 2].Reproduce();
+            aviableReproductionRabbits[(reproductionTimes * 2) + 1].Reproduce();
 
+            newRabbits.Add(new Rabbit(_rabbitConfig));
         }
 
         return newRabbits;

@@ -6,6 +6,7 @@ using EcoSimulator.Core.Interface.IWorld;
 using EcoSimulator.Core.Organism.Base;
 using EcoSimulator.Core.Organism;
 using EcoSimulator.Core.Organism.SpeciesReport;
+using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 
 public class RabbitManager : IPopulationManager
@@ -14,6 +15,13 @@ public class RabbitManager : IPopulationManager
     private int _turnDeads;
     private int _turnBorns;
     private int _turnTotalRabbits;
+    private readonly FaunaConfig _config;
+
+    public RabbitManager(FaunaConfig config)
+    {
+        _config = config;
+    }
+
     public IEnumerable<Organism> PopulationRegister(IEnumerable<Organism> allOrganism)
     {
         //Count the deads happens in the turn
@@ -42,7 +50,7 @@ public class RabbitManager : IPopulationManager
         //Iterate for the born of the new rabbits
         for(int i = 0; i < reproduceNumber; i++)
         {
-            Rabbit rabbit = new Rabbit();
+            Rabbit rabbit = new Rabbit(_config);
             totalTurnRabbits.Add(rabbit);
         }
 

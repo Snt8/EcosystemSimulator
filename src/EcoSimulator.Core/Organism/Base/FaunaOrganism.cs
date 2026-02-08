@@ -20,7 +20,7 @@ public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, I
         ReproduceEnergy = objReproduceEnergy;
     }
 
-    protected virtual void Grow()
+    public virtual void Grow()
     {
         if(IsDead) return;
 
@@ -28,8 +28,9 @@ public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, I
         CheckMetabolism();
     }
 
-    protected virtual void CheckMetabolism()
+    public virtual void CheckMetabolism()
     {
+        //Check if the Organism is younger of 
         double energyCost = (Age < _config.AdultAge) ? _config.EnergySpentYounger : _config.EnergySpentOlder;
         ApplyMetabolism(energyCost, energyCost);
     }
@@ -40,11 +41,34 @@ public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, I
         if (IsDead) return;
     }
 
-    protected void ApplyMetabolism(double energySpent, double hungryGain)
+    // Protected method: Only children (Rabbit, Wolf) can access their metabolism directly.
+    protected void IngestFood(double energyValue, double hungerReduction)
+    {
+        Energy = Math.Min(Energy + energyValue, _config.MaxEnergy);
+        Hunger = Math.Max(Hunger - hungerReduction, 0);
+        HasEaten = true;
+    }
+
+    public void ApplyMetabolism(double energySpent, double hungryGain)
     {
         //Method implements the general rule in the calculation of the Metabolism
         Energy = Math.Max(0, Energy - energySpent);
         Hunger += hungryGain;
+    }
+
+    public void Reproduce()
+    {
+        //Standart form of Reproduce method
+        HasEaten = false;
+    }
+
+    public void Die()
+    {
+        //Standart form of Die method
+        if((Energy < _config.MinimumEnergy) || (Age > _config.MaxOlderAge))
+        {
+            IsDead = true;
+        }
     }
 
 }
