@@ -1,9 +1,6 @@
 namespace EcoSimulator.Core.Processors;
 
-using System.Dynamic;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
