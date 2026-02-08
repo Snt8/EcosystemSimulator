@@ -46,8 +46,10 @@ public class RabbitProcessor : ILifeFaunaProcessor
             {
                 //Calling the Eat() method and adding the target in the List that return the food have eaten
                 rabbit.Eat(targetFood);
-                targetFood.IsEaten = true;
-                eatenFood.Add(targetFood);
+                if (targetFood.IsEaten)
+                {
+                    eatenFood.Add(targetFood);
+                }
             }
 
         }
@@ -77,6 +79,11 @@ public class RabbitProcessor : ILifeFaunaProcessor
         //Check the rabbits are avaible for reproduce
         var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>().Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy);
         int reproductionCount = aviableReproductionRabbits.Count() / 2;
+        var aviableReproductionRabbits = MasterRabbit.OfType<FaunaOrganism>()
+                                                     .Where(r => r.HasEaten && r.Energy > r.ReproduceEnergy)
+                                                     .ToList();
+
+        int reproductionCount = aviableReproductionRabbits.Count / 2;
         List<Organism> newRabbits = new(reproductionCount);
         //Iterate for check the number of new rabbits
         for(int reproductionTimes = 0; reproductionTimes < reproductionCount; reproductionTimes++)
@@ -84,7 +91,11 @@ public class RabbitProcessor : ILifeFaunaProcessor
             Rabbit babyRabbit = new Rabbit(_rabbitConfig);
             newRabbits.Add(babyRabbit);
             
+            // Update parents state (reset HasEaten) so they need to eat again before reproducing
+            aviableReproductionRabbits[reproductionTimes * 2].Reproduce();
+            aviableReproductionRabbits[(reproductionTimes * 2) + 1].Reproduce();
 
+            newRabbits.Add(new Rabbit(_rabbitConfig));
         }
 
         return newRabbits;
