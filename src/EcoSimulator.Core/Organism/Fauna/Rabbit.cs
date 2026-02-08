@@ -18,6 +18,7 @@ public class Rabbit : FaunaOrganism
     {
         // Call base to check common rules (like IsDead)
         base.Eat(food);
+        if (IsDead) return;
         
         if (food is FloraOrganism flora && !flora.IsEaten && !flora.IsDead)
         {
