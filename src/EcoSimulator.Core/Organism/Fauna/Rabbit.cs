@@ -8,7 +8,7 @@ using EcoSimulator.Core.Organism.OrganismDataConfig;
 
 
 
-public class Rabbit : FaunaOrganism
+public sealed class Rabbit : FaunaOrganism
 {
     public Rabbit(FaunaConfig config) : base(config, config.MaxEnergy, config.FaunaReproduceEnergy)
     {
