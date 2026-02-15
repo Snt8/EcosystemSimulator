@@ -5,7 +5,7 @@ using EcoSimulator.Core.Organism.OrganismDataConfig;
 namespace EcoSimulator.Core.Organism;
 
 
-public class Carrot : FloraOrganism, IGrow, IDie
+public class Carrot : FloraOrganism
 {
     
     public Carrot(FloraConfig floraConfig) : base(floraConfig.Energy, floraConfig.EnergyGiven, floraConfig.HungryMinus, floraConfig.MaxFloraAge)
