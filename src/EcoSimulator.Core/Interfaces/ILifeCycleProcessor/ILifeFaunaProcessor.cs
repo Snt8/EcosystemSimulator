@@ -13,5 +13,6 @@ public interface ILifeFaunaProcessor
     //Third time of the Turn, the Processor calls the Die() method of the FaunaOrganism Sub-Class if die
     public IEnumerable<Organism> CallDie();
 
+    //Fourth time of the Turn, the Processor calls the Reproduce() method of the FaunaOrganism Sub-Class
     public IEnumerable<Organism> CallReproduce();
 }
