@@ -2,7 +2,7 @@ namespace EcoSimulator.Core.Organism.OrganismDataConfig;
 
 public class FaunaConfig
 {
-    //Standart Fauna Organism constant atributes
+    //Standard Fauna Organism constant atributes
     public double EnergySpentYounger {get; set;}
     public double EnergySpentOlder {get; set;}
     public int AdultAge {get; set;}

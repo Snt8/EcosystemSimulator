@@ -2,7 +2,7 @@ namespace EcoSimulator.Core.Organism.Base;
 
 public abstract class Organism
 {
-    //Define the base atributes that every animal have
+    //Define the base atributes that every Organism has
     public double Energy {get; protected set;}
     public int Age {get; protected set;}
     public bool IsDead {get; protected set;}
