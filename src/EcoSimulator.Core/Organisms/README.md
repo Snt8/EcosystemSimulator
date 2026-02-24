@@ -12,4 +12,4 @@
 
 ## 🚀 How to use it?
 
-Every file in this directory lives in the `EcoSimulator.Core.Organism` namespace. If you want to use a specific component, you need to write the directory where the file lives also.
+Every file in this directory lives in the `EcoSimulator.Core.Organisms` namespace. If you want to use a specific component, you need to write the directory where the file lives also.

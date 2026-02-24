@@ -2,7 +2,7 @@
 using EcoSimulator.Core.Organism.Base;
 namespace EcoSimulator.Core.Processors.BaseLifeCycleProcessor;
 
-    public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
+public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
 {
     public List<Organism> MasterOrganism {get; private set;}
     public List<Organism> MasterFoodOrganism {get; private set;}
