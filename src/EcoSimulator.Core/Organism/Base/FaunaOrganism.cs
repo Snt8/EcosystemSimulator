@@ -8,13 +8,15 @@ using EcoSimulator.Core.Organism.OrganismDataConfig;
 public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
 {
     protected readonly FaunaConfig _config;
+    public double Energy { get; private set; }
     public bool HasEaten {get; protected set;}
     public double Hunger {get; protected set;}
     public double ReproduceEnergy {get; protected set;}
 
-    public FaunaOrganism(FaunaConfig objConfig, double objEnergy, double objReproduceEnergy) : base(objEnergy)
+    public FaunaOrganism(FaunaConfig objConfig, double objEnergy, double objReproduceEnergy)
     {
         _config = objConfig;
+        Energy = objEnergy;
         HasEaten = false;
         Hunger = 0.0;
         ReproduceEnergy = objReproduceEnergy;

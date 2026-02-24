@@ -7,7 +7,7 @@ public abstract class FloraOrganism : Organism, IGrow, IDie
     public double HungryMinus {get; protected set;} //Hungry FloraOrganism minus to an animal
     public int MaxAge {get; protected set;} //The max time that the FloraOrganism can exist
 
-    public FloraOrganism(double objEnergy, double objEnergyGiven, double objHungryMinus, int objMaxAge) : base(objEnergy)
+    public FloraOrganism(double objEnergyGiven, double objHungryMinus, int objMaxAge)
     {
         //Constructor with the base atributes
         EnergyGiven = objEnergyGiven;
