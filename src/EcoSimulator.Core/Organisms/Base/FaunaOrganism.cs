@@ -3,7 +3,7 @@ namespace EcoSimulator.Core.Organisms.Base;
 using System;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.IOrganism;
-using EcoSimulator.Core.Organism.OrganismDataConfig;
+using EcoSimulator.Core.Organisms.OrganismDataConfig;
 
 public abstract class FaunaOrganism : Organism, IGrow, ICheckMetabolism, IEat, IReproduce, IDie
 {

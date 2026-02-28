@@ -1,4 +1,4 @@
-namespace EcoSimulator.Core.Organism.OrganismDataConfig.General;
+namespace EcoSimulator.Core.Organisms.OrganismDataConfig.General;
 
 public abstract class OrganismConfig
 {

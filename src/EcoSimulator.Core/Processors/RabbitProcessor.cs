@@ -1,12 +1,12 @@
-namespace EcoSimulator.Core.Processors;
-
 using System.Linq;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
-using EcoSimulator.Core.Organism;
-using EcoSimulator.Core.Organism.Base;
-using EcoSimulator.Core.Organism.OrganismDataConfig;
+using EcoSimulator.Core.Organisms;
+using EcoSimulator.Core.Organisms.Base;
+using EcoSimulator.Core.Organisms.OrganismDataConfig;
+
+namespace EcoSimulator.Core.Processors;
 
 public class RabbitProcessor : ILifeFaunaProcessor
 {
