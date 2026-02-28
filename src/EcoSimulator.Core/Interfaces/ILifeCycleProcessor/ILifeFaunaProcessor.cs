@@ -1,6 +1,6 @@
 namespace EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using EcoSimulator.Core.Interface.IOrganism;
-using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organisms.Base;
 
 public interface ILifeFaunaProcessor
 {

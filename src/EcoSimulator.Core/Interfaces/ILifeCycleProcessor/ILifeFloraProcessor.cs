@@ -1,7 +1,7 @@
 namespace EcoSimulator.Core.Interface.ILifeCycleProcessor;
 
 using System.Xml.Serialization;
-using EcoSimulator.Core.Organism.Base;
+using EcoSimulator.Core.Organisms.Base;
 
 public interface ILifeFloraProcessor
 {
