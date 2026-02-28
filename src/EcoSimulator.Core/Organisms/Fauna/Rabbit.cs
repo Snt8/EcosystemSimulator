@@ -1,10 +1,10 @@
-namespace EcoSimulator.Core.Organisms;
-
 using System;
 using EcoSimulator.Core.Interface;
 using EcoSimulator.Core.Interface.IOrganism;
 using EcoSimulator.Core.Organisms.Base;
 using EcoSimulator.Core.Organisms.OrganismDataConfig;
+
+namespace EcoSimulator.Core.Organisms;
 
 
 
