@@ -1,12 +1,12 @@
-namespace EcoSimulator.Core.Manager;
-
 using System.Collections.Generic;
 using System.Linq;
 using EcoSimulator.Core.Interface.IWorld;
-using EcoSimulator.Core.Organism.Base;
-using EcoSimulator.Core.Organism;
-using EcoSimulator.Core.Organism.SpeciesReport;
-using EcoSimulator.Core.Organism.OrganismDataConfig;
+using EcoSimulator.Core.Organisms.Base;
+using EcoSimulator.Core.Organisms;
+using EcoSimulator.Core.Organisms.SpeciesReport;
+using EcoSimulator.Core.Organisms.OrganismDataConfig;
+
+namespace EcoSimulator.Core.Manager;
 
 
 public class RabbitManager : IPopulationManager
