@@ -1,5 +1,6 @@
+using EcoSimulator.Core.Organisms.Base;
+
 namespace EcoSimulator.Core.Interface;
-using EcoSimulator.Core.Organism.Base;
 
 public interface IEat
 {
