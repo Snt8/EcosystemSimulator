@@ -29,11 +29,24 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
     public IEnumerable<BaseOrganism> CallEat()
     {
         //create eaten food list
-        List<FaunaOrganism> eatenFood = new();
+        List<BaseOrganism> eatenFood = new();
         foreach(var organism in MasterFoodOrganism.OfType<IEat>)
         {
+            //Access to UneatedFood
+            if(UneatedFood.TryDequeue(out var targetFood))
+            {
+                //Call Eat() method
+                organism.Eat(targetFood);
 
+                if (targetFood.IsEaten)
+                {
+                    //Add the eatenFood into list
+                    eatenFood.Add(targetFood);
+                }
+            }
         }
+
+        return eatenFood;
 
     }
 
