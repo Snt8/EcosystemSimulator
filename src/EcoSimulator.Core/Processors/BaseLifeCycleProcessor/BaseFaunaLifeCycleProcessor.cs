@@ -1,6 +1,7 @@
 ﻿using EcoSimulator.Core.Interface.ILifeCycleProcessor;
 using BaseOrganism = EcoSimulator.Core.Organisms.Base.Organism;
 using EcoSimulator.Core.Organisms.Base;
+using EcoSimulator.Core.Interface;
 
 namespace EcoSimulator.Core.Processors.BaseLifeCycleProcessor;
 
