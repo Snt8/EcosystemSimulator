@@ -8,7 +8,13 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
 {
     public List<FaunaOrganism> MasterOrganism {get; private set;}
     public List<BaseOrganism> MasterFoodOrganism {get; private set;}
+    public Queue<BaseOrganism> UneatedFood { get; private set; }
 
+    public FaunaLifeCycleProcessor(List<FaunaOrganism> MasterOrgnaism, List<BaseOrganism> MasterFoodOrganism)
+    {
+        this.MasterOrganism = MasterOrgnaism;
+        this.MasterFoodOrganism = MasterFoodOrganism;
+    }
 
     public void CallGrow()
     {
