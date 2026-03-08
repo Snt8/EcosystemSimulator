@@ -14,6 +14,7 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
     {
         foreach (var organism in MasterOrganism)
         {
+            //Calling Organism grow method
             organism.Grow();
         }
 
@@ -21,6 +22,12 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
 
     public IEnumerable<BaseOrganism> CallEat()
     {
+        //create eaten food list
+        List<FaunaOrganism> eatenFood = new();
+        foreach(var organism in MasterFoodOrganism.OfType<IEat>)
+        {
+
+        }
 
     }
 
