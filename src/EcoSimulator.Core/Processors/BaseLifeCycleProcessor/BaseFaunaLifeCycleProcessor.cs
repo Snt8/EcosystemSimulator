@@ -15,6 +15,9 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
     {
         this.MasterOrganism = MasterOrgnaism;
         this.MasterFoodOrganism = MasterFoodOrganism;
+
+        // Inicializamos la cola de alimentos disponibles basándonos en la lista inicial
+        this.UneatedFood = new Queue<BaseOrganism>(MasterFoodOrganism.Where(f => !f.IsEaten && f is BaseOrganism));
     }
 
     public void CallGrow()
@@ -31,7 +34,7 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
     {
         //create eaten food list
         List<BaseOrganism> eatenFood = new();
-        foreach(var organism in MasterFoodOrganism.OfType<IEat>)
+        foreach(var organism in MasterOrganism.OfType<IEat>())
         {
             //Access to UneatedFood
             if(UneatedFood.TryDequeue(out var targetFood))
@@ -53,7 +56,7 @@ public class FaunaLifeCycleProcessor : ILifeFaunaProcessor
 
     public IEnumerable<BaseOrganism> CallDie()
     {
-
+        
     }
 
     public IEnumerable<BaseOrganism> CallReproduce()
