@@ -1,6 +1,7 @@
-namespace EcoSimulator.Core.Organism.OrganismDataConfig.Specific;
+using EcoSimulator.Core.Organisms.OrganismDataConfig.General;
 
-using EcoSimulator.Core.Organism.OrganismDataConfig.General;
+namespace EcoSimulator.Core.Organisms.OrganismDataConfig.Specific;
+
 
 public class FaunaConfig : OrganismConfig
 {

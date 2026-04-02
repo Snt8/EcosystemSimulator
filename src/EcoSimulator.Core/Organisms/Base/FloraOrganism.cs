@@ -1,5 +1,7 @@
-namespace EcoSimulator.Core.Organisms.Base;
 using EcoSimulator.Core.Interface.IOrganism;
+
+namespace EcoSimulator.Core.Organisms.Base;
+
 
 public abstract class FloraOrganism : Organism, IGrow, IDie
 {

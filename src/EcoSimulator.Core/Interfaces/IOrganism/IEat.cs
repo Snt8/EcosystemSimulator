@@ -1,8 +1,9 @@
+using EcoSimulator.Core.Organisms.Base;
+
 namespace EcoSimulator.Core.Interface;
-using EcoSimulator.Core.Organism.Base;
 
 public interface IEat
 {
     //Every FaunaOrganism need to Eat
-    public void Eat(Organism food);
+    public void Eat(EcoSimulator.Core.Organisms.Base.Organism food);
 }
